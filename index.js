@@ -51,9 +51,31 @@ async function run(){
         //Deleting an Item
 
         app.delete('/item/:id',async (req,res)=>{
-            const id=req.params;
+            const id=req.params.id;
             const qurery={_id:ObjectId(id)};
             const result= await itemCollection.deleteOne(qurery);
+            res.send(result);
+        })
+
+        //Restock
+
+        app.put('/item/:id', async (req,res)=>{
+            const id=req.params.id;
+            const updatedStock = req.body;
+            const filter={_id:ObjectId(id)};
+            const options={
+                upsert:true
+            };
+            const updateDoc = {
+              $set: {
+                quantity: updatedStock.stockInt,
+              },
+            };
+            const result = await itemCollection.updateOne(
+              filter,
+              updateDoc,
+              options
+            );
             res.send(result);
         })
     }
