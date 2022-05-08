@@ -137,7 +137,7 @@ run().catch(console.dir);
 
 
 app.get('/',(req,res)=>{
-    res.send("Server Running!");
+    res.send("Server Running....");
 })
 
 app.listen(port,()=>{
